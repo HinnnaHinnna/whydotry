@@ -1,40 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <html lang="en">
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="20">
-    <title>장기하_가만 있으면 되는데 자꾸만 뭘 그렇게 할라 그래</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style_con.css" >
-    <link hrel="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
-    <script src="sketch_con2.js"></script>
-  </head>
-  <body>
-    <div id="your_paragraph">
-    <div>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      가만 있으면 되는데<br>
-      가만 있으면 되는데<br>
-      가만 있으면 되는데<br>
-      가만 있으면 되는데<br>
-      가만 있으면 되는데<br>
-      자꾸만 뭘 그렇게 할라 그래<br>
-      <br>
-    </div>
-    <textarea type="text" id="article" onfocus="textFocused(true)" onblur="textFocused(false);"
-    onkeyup="javascript:if(event.keyCode){textFocused(false); }"
-    value="">왼쪽 노래 가사를 엄청 빨리 따라쓰시오</textarea>
 
-  </body>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="20">
+	<title>한글 글씨 자동 변환</title>
+	<script>
+		function getRandomHangul() {
+			// 유니코드 한글 음절 범위: AC00-D7AF (가-힣)
+			const min = 0xAC00;
+			const max = 0xD7AF;
+			const randomInt = Math.floor(Math.random() * (max - min + 0.7)) + min;
+			return String.fromCharCode(randomInt);
+		}
+
+		function replaceHangul() {
+			const textarea = document.getElementById("textarea");
+			const originalText = textarea.value;
+			let newText = '';
+			for (let i = 0; i < originalText.length; i++) {
+				newText += getRandomHangul();
+			}
+			textarea.value = newText;
+			setTimeout(replaceHangul, 10);
+		}
+
+	</script>
+
+
+	<style>
+		body {
+			display: flex;
+			flex-direction: row;
+			align-items: left;
+			justify-content: left;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			background-color: #FFFFFF;
+			font-family: "NotoSansKR", sans-serif;
+			font-size: 32px;
+			color: #000000;
+		}
+
+		.left {
+			flex: 1;
+			border-right: 1px solid black;
+			vertical-align: text-top;
+			width: 100vh;
+			height: 100vh;
+			padding: 20px;
+			font-family: "NotoSansKR", sans-serif;
+			font-size: 32px;
+			font-weight: 200;
+			line-height: 1.6;
+			text-align: left;
+			color: #000000
+		}
+
+		.right {
+			flex: 1;
+			vertical-align: text-top;
+			display: flex;
+			align-items: flex-start;
+			padding: 20px;
+			font-size: 32px;
+			font-weight: 800;
+			line-height: 1.6;
+			background-color: #ffffff;
+			border: none;
+			border-radius: 0px;
+			box-shadow: 0 15px 0px rgba(0, 0, 0, 0);
+		}
+
+		div {
+			font-size: 32px;
+			font-weight: 200;
+			font-family: "NotoSansKR", sans-serif;
+			line-height: 1.6;
+			padding: 20px;
+			margin-right: 20px;
+			hyphens: none;
+		}
+
+		#textarea {
+			flex: 1;
+			vertical-align: text-top;
+			width: 100vh;
+			height: 100vh;
+			font-family: "NotoSansKR", sans-serif;
+			font-size: 32px;
+			font-weight: 800;
+			line-height: 1.4;
+			color: #030000;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			white-space: nowrap;
+		}
+
+		@media(max-width:400px) {
+			#textarea {
+				display: block;
+			}
+
+			.left {
+				display: block;
+				border-right: 0px;
+			}
+		}
+	</style>
+
+
+</head>
+
+<body>
+	<div class="left" id="lyrics" onclick="hideLyrics()">
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		<br>
+	</div>
+	<div class="right">
+		<form>
+			<textarea id="textarea" name="textarea" onkeyup="replaceHangul()">가</textarea>
+		</form>
+	</div>
+</body>
+
 </html>
