@@ -1,122 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="30">
-  <title>가만 있으면 되는데</title>
-  <script>
-    function focusTextarea() {
-      const textarea = document.getElementById("textarea");
-      textarea.focus();
-      replaceHangul(); // 페이지 로드 시 변환 시작
-    }
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="30">
+	<title>가만 있으면 되는데</title>
+	<script>
+		function getRandomHangul() {
+			const min = 0xAC00;
+			const max = 0xD7AF;
+			const randomInt = Math.floor(Math.random() * (max - min + 0.7)) + min;
+			return String.fromCharCode(randomInt);
+		}
 
-    function getRandomHangul() {
-      const min = 0xAC00, max = 0xD7AF;
-      const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
-      return String.fromCharCode(randomInt);
-    }
+		function replaceHangul() {
+			const textarea = document.getElementById("textarea");
+			const originalText = textarea.value;
+			let newText = '';
+			for (let i = 0; i < originalText.length; i++) {
+				newText += getRandomHangul();
+			}
+			textarea.value = newText;
+			setTimeout(replaceHangul, 10);
+		}
+	</script>
 
-    function replaceHangul() {
-      const textarea = document.getElementById("textarea");
-      if (!initialInput) { // 첫 입력이 이루어진 후에만 실행
-        const originalText = textarea.value;
-        let newText = '';
-        for (let i = 0; i < originalText.length; i++) {
-          newText += getRandomHangul();
-        }
-        textarea.value = newText;
-      }
-      setTimeout(replaceHangul, 10); // 지속적으로 변환 실행
-    }
+	<style>
+		body {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			justify-content: flex-start;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			background-color: #FFFFFF;
+			font-family: "NotoSansKR", sans-serif;
+			font-size: 30px;
+			color: #000000;
+		}
 
-    let initialInput = true; // 최초 입력을 확인하기 위한 플래그
+		.left {
+			flex: 1;
+			border-right: 1px solid black;
+			padding: 20px;
+			font-weight: 200;
+			line-height: 1.5;
+			text-align: left;
+			box-sizing: border-box;
+		}
 
-    function handleInput(event) {
-      const textarea = event.target;
-      if (initialInput && textarea.value !== '') {
-        initialInput = false; // 최초 입력 완료
-        replaceHangul(); // 변환 시작
-      }
-    }
-  </script>
-  <style>
-    body {
-      display: flex;
-      flex-direction: row;
-      align-items: left;
-      justify-content: left;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-      background-color: #FFFFFF;
-      font-family: "NotoSansKR", sans-serif;
-      font-size: 30px;
-      font-weight: 200;
-      line-height: 1.5;
-      color: #000000;
-    }
+		.right {
+			flex: 1;
+			display: flex;
+			align-items: flex-start;
+			padding: 20px;
+			box-sizing: border-box;
+		}
 
-    .left,
-    .right {
-      flex: 1;
-      width: 50vw;
-      font-family: "NotoSansKR", sans-serif;
-      vertical-align: top;
-      padding: 20px;
-    }
+		#textarea {
+			flex: 1;
+			width: 100%;
+			min-height: 40vh;
+			font-family: "NotoSansKR", sans-serif;
+			font-size: 28px;
+			font-weight: 800;
+			line-height: 1.5;
+			color: #030000;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			resize: none;
+			white-space: nowrap;
+		}
 
-    .left {
-      border-right: 1px solid black;
-    }
+		@media(max-width: 768px) {
+			body {
+				flex-direction: column;
+			}
 
-    textarea {
-      width: 100%;
-      height: 80vh;
-      font-size: 30px;
-      font-weight: 800;
-      border: none;
-      outline: none;
-      resize: none;
-      font-family: "NotoSansKR", sans-serif;
-    }
+			.left {
+				border-right: none;
+				border-bottom: 1px solid black;
+				font-size: 20px;
+				padding: 10px;
+			}
 
-    textarea::placeholder {
-      color: #000000;
-      font-weight: 800;
-      opacity: 1;
-      font-family: "NotoSansKR", sans-serif;
-    }
-  </style>
+			.right {
+				padding: 10px;
+			}
+
+			#textarea {
+				font-size: 20px;
+				min-height: 30vh;
+				white-space: pre-wrap;
+			}
+		}
+	</style>
 </head>
 
-<body onload="focusTextarea()">
-  <div class="left" id="lyrics">
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    가만 있으면 되는데<br>
-    가만 있으면 되는데<br>
-    가만 있으면 되는데<br>
-    가만 있으면 되는데<br>
-    가만 있으면 되는데<br>
-    자꾸만 뭘 그렇게 할라 그래<br>
-    <br>
-  </div>
-  <div class="right">
-    <form>
-      <textarea id="textarea" name="textarea" oninput="handleInput(event)"
-        placeholder="뒤로 가서 왼쪽 노래 가사를 따라 쓰시오"></textarea>
-    </form>
-  </div>
+<body>
+	<div class="left" id="lyrics" onclick="hideLyrics()">
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		가만 있으면 되는데<br>
+		자꾸만 뭘 그렇게 할라 그래<br><br>
+	</div>
+	<div class="right">
+		<form>
+			<textarea id="textarea" name="textarea" onclick="this.value='' " onkeyup="replaceHangul()">왼쪽 노래 가사를 따라쓰시오</textarea>
+		</form>
+	</div>
 </body>
 
 </html>
