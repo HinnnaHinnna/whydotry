@@ -1,146 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="30">
-	<title>가만 있으면 되는데</title>
-	<script>
-		function getRandomHangul() {
-			// 유니코드 한글 음절 범위: AC00-D7AF (가-힣)
-			const min = 0xAC00;
-			const max = 0xD7AF;
-			const randomInt = Math.floor(Math.random() * (max - min + 0.7)) + min;
-			return String.fromCharCode(randomInt);
-		}
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="30">
+  <title>가만 있으면 되는데</title>
+  <script>
+    function focusTextarea() {
+      const textarea = document.getElementById("textarea");
+      textarea.focus();
+      replaceHangul(); // 페이지 로드 시 변환 시작
+    }
 
-		function replaceHangul() {
-			const textarea = document.getElementById("textarea");
-			const originalText = textarea.value;
-			let newText = '';
-			for (let i = 0; i < originalText.length; i++) {
-				newText += getRandomHangul();
-			}
-			textarea.value = newText;
-			setTimeout(replaceHangul, 10);
-		}
+    function getRandomHangul() {
+      const min = 0xAC00, max = 0xD7AF;
+      const randomInt = Math.floor(Math.random() * (max - min + 1)) + min;
+      return String.fromCharCode(randomInt);
+    }
 
-	</script>
+    function replaceHangul() {
+      const textarea = document.getElementById("textarea");
+      if (!initialInput) { // 첫 입력이 이루어진 후에만 실행
+        const originalText = textarea.value;
+        let newText = '';
+        for (let i = 0; i < originalText.length; i++) {
+          newText += getRandomHangul();
+        }
+        textarea.value = newText;
+      }
+      setTimeout(replaceHangul, 10); // 지속적으로 변환 실행
+    }
 
+    let initialInput = true; // 최초 입력을 확인하기 위한 플래그
 
-	<style>
-		body {
-			display: flex;
-			flex-direction: row;
-			align-items: left;
-			justify-content: left;
-			height: 100vh;
-			margin: 0;
-			padding: 0;
-			background-color: #FFFFFF;
-			font-family: "NotoSansKR", sans-serif;
-			font-size: 30px;
-			color: #000000;
-		}
+    function handleInput(event) {
+      const textarea = event.target;
+      if (initialInput && textarea.value !== '') {
+        initialInput = false; // 최초 입력 완료
+        replaceHangul(); // 변환 시작
+      }
+    }
+  </script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+      justify-content: left;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-color: #FFFFFF;
+      font-family: "NotoSansKR", sans-serif;
+      font-size: 30px;
+      font-weight: 200;
+      line-height: 1.5;
+      color: #000000;
+    }
 
-		.left {
-			flex: 1;
-			border-right: 1px solid black;
-			vertical-align: text-top;
-			width: 100%;
-			height: 100vh;
-			padding: 20px;
-			font-family: "NotoSansKR", sans-serif;
-			font-size: 30px;
-			font-weight: 200;
-			line-height: 1.5;
-			text-align: left;
-			color: #000000
-		}
+    .left,
+    .right {
+      flex: 1;
+      width: 50vw;
+      font-family: "NotoSansKR", sans-serif;
+      vertical-align: top;
+      padding: 20px;
+    }
 
-		.right {
-			flex: 1;			
-			vertical-align: text-top;
-			display: flex;
-			align-items: flex-start;
-			padding-top: 20px;
-      padding-right: 0px;
-			font-size: 30px;
-			font-weight: 800;
-			line-height: 1.5;
-			background-color: #ffffff;
-			border: none;
-			border-radius: 0px;
-			box-shadow: 0 15px 0px rgba(0, 0, 0, 0);
-		}
+    .left {
+      border-right: 1px solid black;
+    }
 
-		div {
-			font-size: 30px;
-			font-weight: 300;
-			font-family: "NotoSansKR", sans-serif;
-			line-height: 1.5;
-			padding: 20px;
-			margin-right: 20px;
-			hyphens: none;
-		}
+    textarea {
+      width: 100%;
+      height: 80vh;
+      font-size: 30px;
+      font-weight: 800;
+      border: none;
+      outline: none;
+      resize: none;
+      font-family: "NotoSansKR", sans-serif;
+    }
 
-		#textarea {
-			flex: 1;
-			vertical-align: text-top;
-			display: flex;
-			width: 100%;
-			height: 100vh;
-			font-family: "NotoSansKR", sans-serif;
-			font-size: 30px;
-			font-weight: 800;
-			line-height: 1.5;
-			color: #030000;
-			border: none;
-			outline: none;
-			background-color: transparent;
-			white-space: nowrap;
-		}
-
-		@media(max-width:400px) {
-			#textarea {
-				display: block;
-			}
-
-			.left {
-				display: block;
-				border-right: 0px;
-			}
-		}
-	</style>
-
-
+    textarea::placeholder {
+      color: #000000;
+      font-weight: 800;
+      opacity: 1;
+      font-family: "NotoSansKR", sans-serif;
+    }
+  </style>
 </head>
 
-<body>
-	<div class="left" id="lyrics" onclick="hideLyrics()">
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		가만 있으면 되는데<br>
-		가만 있으면 되는데<br>
-		가만 있으면 되는데<br>
-		가만 있으면 되는데<br>
-		가만 있으면 되는데<br>
-		자꾸만 뭘 그렇게 할라 그래<br>
-		<br>
-	</div>
-	<div class="right">
-		<form>
-			<textarea id="textarea" name="textarea" onclick="this.value='' "onkeyup="replaceHangul()">왼쪽 노래 가사를 따라쓰시오</textarea>
-		</form>
-	</div>
+<body onload="focusTextarea()">
+  <div class="left" id="lyrics">
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    가만 있으면 되는데<br>
+    가만 있으면 되는데<br>
+    가만 있으면 되는데<br>
+    가만 있으면 되는데<br>
+    가만 있으면 되는데<br>
+    자꾸만 뭘 그렇게 할라 그래<br>
+    <br>
+  </div>
+  <div class="right">
+    <form>
+      <textarea id="textarea" name="textarea" oninput="handleInput(event)"
+        placeholder="뒤로 가서 왼쪽 노래 가사를 따라 쓰시오"></textarea>
+    </form>
+  </div>
 </body>
 
 </html>
