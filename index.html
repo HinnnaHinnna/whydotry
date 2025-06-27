@@ -41,6 +41,13 @@
         replaceHangul();
       }
     }
+     window.addEventListener("DOMContentLoaded", () => {
+      const textarea = document.getElementById("textarea");
+      // 모바일 화면(768px 이하)일 때 placeholder 변경
+      if (window.innerWidth <= 768) {
+        textarea.placeholder = "위의 노래 가사를 엄청 빨리 따라 쓰시오";
+      }
+    });
   </script>
   <style>
     html,
